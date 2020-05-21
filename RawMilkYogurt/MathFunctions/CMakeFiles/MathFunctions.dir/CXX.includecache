@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/haopeng/Github/YOGURT/RawMilkYogurt/MathFunctions/MathFunctions.h
+
+/home/haopeng/Github/YOGURT/RawMilkYogurt/MathFunctions/mysqrt.cpp
+MathFunctions.h
+/home/haopeng/Github/YOGURT/RawMilkYogurt/MathFunctions/MathFunctions.h
+stdio.h
+-
+

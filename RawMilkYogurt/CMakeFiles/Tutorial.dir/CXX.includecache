@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/haopeng/Github/YOGURT/RawMilkYogurt/Tutorial.cpp
+stdio.h
+-
+stdlib.h
+-
+math.h
+-
+
