@@ -163,6 +163,8 @@ endif()
 option(BUILD_EXAMPLES "Build example code" ON)
 if(BUILD_EXAMPLES)
   add_subdirectory(examples)
+  #### Haopeng
+  add_subdirectory(yogurt)
 endif()
 
 option(BUILD_DOCUMENTATION "Build documentation" OFF)
@@ -198,12 +200,16 @@ include(CPack)
 file(GLOB_RECURSE SOURCES
   src/*.cpp
   examples/*.cpp
+  #### Haopeng
+  yogurt/*.cpp
   common/*.cpp
 )
 file(GLOB_RECURSE HEADERS
   include/*.h
   src/*.h
   examples/*.h
+  #### Haopeng
+  yogurt.*.h
   common/*.h
 )
 file(GLOB_RECURSE TEST_FILES

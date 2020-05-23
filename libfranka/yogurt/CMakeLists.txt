@@ -21,7 +21,7 @@ find_package(Threads REQUIRED)
 #target_link_libraries(examples_common PUBLIC Franka::Franka Eigen3::Eigen3)
 
 set(YOGURTS
-  generate_joint_position_motion_yogurt
+  yogurtJointMotion
 )
 
 foreach(yogurt ${YOGURTS})
