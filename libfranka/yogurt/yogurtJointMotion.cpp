@@ -8,7 +8,6 @@
 #include <franka/exception.h>
 #include <franka/robot.h>
 
-#include "examples_common.h"
 
 int main(int argc, char** argv) {
     if (argc != 2) {
@@ -18,7 +17,7 @@ int main(int argc, char** argv) {
   try
   {
       franka::Robot robot(argv[1]);
-      //setDefaultBehavior(robot);
+      
       robot.setCollisionBehavior(
       {{20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0}}, {{20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0}},
       {{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0}}, {{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0}},
@@ -26,14 +25,11 @@ int main(int argc, char** argv) {
       {{10.0, 10.0, 10.0, 10.0, 10.0, 10.0}}, {{10.0, 10.0, 10.0, 10.0, 10.0, 10.0}});
       robot.setJointImpedance({{3000, 3000, 3000, 2500, 2500, 2000, 2000}});
       robot.setCartesianImpedance({{3000, 3000, 3000, 300, 300, 300}});
-      //std::array<double, 7> q_goal = {{0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4}};
-      //MotionGenerator motion_generator(0.5, q_goal);
+
       std::cout << "WARNING: This code will move the robot! "
               << "Please make sure to have the user stop button at hand!" << std::endl
               << "Press Enter to continue..." << std::endl;
       std::cin.ignore();
-      //robot.control(motion_generator);
-      //std::cout << "Finished moving to initial joint configuration." << std::endl;
 
       // Set additional parameters always before the control loop, NEVER in the control loop!
       // Set collision behavior.
