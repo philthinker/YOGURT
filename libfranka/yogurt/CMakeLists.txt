@@ -14,11 +14,11 @@ find_package(Poco REQUIRED COMPONENTS Foundation)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-#add_library(examples_common STATIC
-#  examples_common.cpp
-#)
+add_library(examples_common STATIC
+  examples_common.cpp
+)
 
-#target_link_libraries(examples_common PUBLIC Franka::Franka Eigen3::Eigen3)
+target_link_libraries(examples_common PUBLIC Franka::Franka Eigen3::Eigen3)
 
 set(YOGURTS
   yogurtJointMotion
