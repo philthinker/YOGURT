@@ -11,6 +11,7 @@
 // franka
 #include<franka/robot.h>
 #include<franka/exception.h>
+#include<franka/model.h>
 
 int main(int argc, char** argv){
     // Check arguments

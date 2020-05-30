@@ -13,8 +13,9 @@ int main(int argc, char** argv){
     // Check arguments
     // The fci-ip address always comes frist.
     if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " 172.16.0.2" << std::endl;
-    return -1;
+    //std::cerr << "Usage: " << argv[0] << " 172.16.0.2" << std::endl;
+    //return -1;
+    }
     try
     {
         // Wait for the keyboard command to run the program
