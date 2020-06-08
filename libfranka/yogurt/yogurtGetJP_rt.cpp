@@ -1,17 +1,19 @@
-// yogurtTemplate
-// 
+//yogurtGetJP_rt
+// Record the external 6th dim. of force and torque by franka's internal dynamics to csv file
+//
 // Haopeng Hu
-// 2020.05.29
+// 2020.06.07, HIT's 100th anniversary
 // All rights reserved
 
-// System 
-#include<iostream>
-#include<cmath>
+#include <iostream>
+#include <cmath>
+#include <ctime>
+#include <fstream>
+#include <string>
+#include <sstream>
 
-// franka
-#include<franka/robot.h>
-#include<franka/exception.h>
-#include<franka/model.h>
+#include <franka/robot.h>
+#include <franka/exception.h>
 
 int main(int argc, char** argv){
     // Check arguments
@@ -20,6 +22,9 @@ int main(int argc, char** argv){
     std::cerr << "Usage: " << argv[0] << " 172.16.0.2" << std::endl;
     return -1;
     }
+    // Init. file
+    std::ofstream out_file;
+    out_file.open("dataJP.csv",std::ios::out);
     try
     {
         franka::Robot robot(argv[1]);
@@ -35,34 +40,25 @@ int main(int argc, char** argv){
         std::cout << "Make sure to have the user stop button at hand!" << std::endl
                 << "Press Enter to continue. Good luck!" << std::endl;
         std::cin.ignore();
-        // Control/Read strategy
-        // Policy parameters
-        double time = 0.0;
-        std::array<double, 7> initialPosition;
-        // Control loop
-        /*
-        robot.control([&initialPosition, &time](const franka::RobotState& robotState,
-                                franka::Duration& period) -> franka::JointPositions {   // Control mode
-            time += period.toSec();
-            // Control policy
-            franka::JointPositions output = {{initialPosition[0], initialPosition[1],
-                                        initialPosition[2], initialPosition[3],
-                                        initialPosition[4], initialPosition[5],
-                                        initialPosition[6]}};
-            // Terminal condition
-            if (time > 10)
-            {
-                std::cout << "Finish the motion. Shut down!" << std::endl;
-                return franka::MotionFinished(output);
+        // Read strategy (1kHz)
+        size_t count = 0;
+        unsigned int subcount = 0;
+        robot.read([&count,&subcount,&out_file](const franka::RobotState& robot_state) -> bool {
+            subcount++;
+            if(subcount >= 1000){
+                subcount = 0;
+                count++;
+                out_file << 0 << ',' << 0 << ',' << 0 << ',' << 0 << ',' << 0 << ',' << 0 <<std::endl;
             }
-            return output;
+            return count < 20;
         });
-        */
+        out_file.close();
+        return 0;
     }
     catch(const franka::Exception& e)
     {
         std::cerr << e.what() << '\n';
+        out_file.close();
         return -1;
     }
-    return 0;
 }
