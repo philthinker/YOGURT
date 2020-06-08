@@ -48,7 +48,13 @@ int main(int argc, char** argv){
             if(subcount >= 1000){
                 subcount = 0;
                 count++;
-                out_file << 0 << ',' << 0 << ',' << 0 << ',' << 0 << ',' << 0 << ',' << 0 <<std::endl;
+                out_file << robot_state.q[0] << ','
+                    << robot_state.q[1] << ','
+                    << robot_state.q[2] << ','
+                    << robot_state.q[3] << ','
+                    << robot_state.q[4] << ','
+                    << robot_state.q[5] << ','
+                    << robot_state.q[6] << std::endl;
             }
             return count < 20;
         });
