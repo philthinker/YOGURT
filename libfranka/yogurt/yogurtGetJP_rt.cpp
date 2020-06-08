@@ -34,8 +34,9 @@ int main(int argc, char** argv){
             {{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0}}, {{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0}},
             {{20.0, 20.0, 20.0, 20.0, 20.0, 20.0}}, {{20.0, 20.0, 20.0, 20.0, 20.0, 20.0}},
             {{10.0, 10.0, 10.0, 10.0, 10.0, 10.0}}, {{10.0, 10.0, 10.0, 10.0, 10.0, 10.0}});
-        robot.setJointImpedance({{3000, 3000, 3000, 2500, 2500, 2000, 2000}});
-        robot.setCartesianImpedance({{3000, 3000, 3000, 300, 300, 300}});
+        // Note that you cannnot set impedance in teaching mode
+        //robot.setJointImpedance({{3000, 3000, 3000, 2500, 2500, 2000, 2000}});
+        //robot.setCartesianImpedance({{3000, 3000, 3000, 300, 300, 300}});
         // Wait for the keyboard command to run the program
         std::cout << "Make sure to have the user stop button at hand!" << std::endl
                 << "Press Enter to continue. Good luck!" << std::endl;

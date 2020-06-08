@@ -24,6 +24,7 @@ set(YOGURTS
   yogurtJointMotion
   yogurtJointVelocity
   yogurtCartesianPose
+  yogurtGetJP_rt
 )
 
 foreach(yogurt ${YOGURTS})
