@@ -14,22 +14,25 @@ find_package(Poco REQUIRED COMPONENTS Foundation)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-add_library(examples_common STATIC
-  examples_common.cpp
-)
+#add_library(examples_common STATIC
+#  examples_common.cpp
+#)
 
-target_link_libraries(examples_common PUBLIC Franka::Franka Eigen3::Eigen3)
+#target_link_libraries(examples_common PUBLIC Franka::Franka Eigen3::Eigen3)
 
 set(YOGURTS
   yogurtJointMotion
   yogurtJointVelocity
   yogurtCartesianPose
   yogurtGetJP_rt
+  yogurtGetTauJ_rt
+  yogurtGetWrench_rt
 )
 
 foreach(yogurt ${YOGURTS})
   add_executable(${yogurt} ${yogurt}.cpp)
-  target_link_libraries(${yogurt} Franka::Franka examples_common Eigen3::Eigen3)
+#  target_link_libraries(${yogurt} Franka::Franka examples_common Eigen3::Eigen3)
+  target_link_libraries(${yogurt} Franka::Franka Eigen3::Eigen3)
 endforeach()
 
 #target_link_libraries(joint_impedance_control Threads::Threads)
