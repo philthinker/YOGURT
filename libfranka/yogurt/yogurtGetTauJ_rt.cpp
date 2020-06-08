@@ -1,8 +1,9 @@
-//yogurtGetJP_rt
-// Record the 7th dim. of joint position of franka to csv file
+//yogurtGetTauJ_rt
+// Record the 7th dim. of torque of franka to csv file
+// Note that those data MAY only be used for test owing to the human's effect.
 //
 // Haopeng Hu
-// 2020.06.07, HIT's 100th anniversary
+// 2020.06.08
 // All rights reserved
 
 #include <iostream>
@@ -24,7 +25,7 @@ int main(int argc, char** argv){
     }
     // Init. file
     std::ofstream out_file;
-    out_file.open("dataJP.csv",std::ios::out);
+    out_file.open("dataTauJ.csv",std::ios::out);
     try
     {
         franka::Robot robot(argv[1]);
@@ -47,18 +48,18 @@ int main(int argc, char** argv){
         robot.read([&count,&subcount,&out_file](const franka::RobotState& robot_state) -> bool {
             subcount++;
             // Set the threshold to lower the fps
-            if(subcount >= 1000){ // 1 per second
+            if(subcount >= 100){ // 10 per second
                 subcount = 0;
                 count++;
-                out_file << robot_state.q[0] << ','
-                    << robot_state.q[1] << ','
-                    << robot_state.q[2] << ','
-                    << robot_state.q[3] << ','
-                    << robot_state.q[4] << ','
-                    << robot_state.q[5] << ','
-                    << robot_state.q[6] << std::endl;
+                out_file << robot_state.tau_J[0] << ','
+                    << robot_state.tau_J[1] << ','
+                    << robot_state.tau_J[2] << ','
+                    << robot_state.tau_J[3] << ','
+                    << robot_state.tau_J[4] << ','
+                    << robot_state.tau_J[5] << ','
+                    << robot_state.tau_J[6] << std::endl;
             }
-            return count < 20; // timeout
+            return count < 100; // timeout
         });
         out_file.close();
         return 0;
