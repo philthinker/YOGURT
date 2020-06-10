@@ -17,7 +17,8 @@ int main(int argc, char** argv) {
   try
   {
       franka::Robot robot(argv[1]);
-      
+      // Set additional parameters always before the control loop, NEVER in the control loop!
+      // Set collision behavior.
       robot.setCollisionBehavior(
       {{20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0}}, {{20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0}},
       {{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0}}, {{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0}},
@@ -31,16 +32,6 @@ int main(int argc, char** argv) {
               << "Press Enter to continue..." << std::endl;
       std::cin.ignore();
 
-      // Set additional parameters always before the control loop, NEVER in the control loop!
-      // Set collision behavior.
-      /*
-      robot.setCollisionBehavior(
-        {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}}, {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}},
-        {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}}, {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}},
-        {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}}, {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}},
-        {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}}, {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}});
-      */
-      
       std::array<double, 7> initial_position;
       double time = 0.0;
       robot.control([&initial_position, &time](const franka::RobotState& robot_state,
