@@ -47,7 +47,7 @@ int main(int argc, char** argv){
         robot.read([&count,&subcount,&out_file](const franka::RobotState& robot_state) -> bool {
             subcount++;
             // Set the threshold to lower the fps
-            if(subcount >= 1000){ // 1 per second
+            if(subcount >= 100){ // 10 per second
                 subcount = 0;
                 count++;
                 out_file << robot_state.q[0] << ','
@@ -58,7 +58,7 @@ int main(int argc, char** argv){
                     << robot_state.q[5] << ','
                     << robot_state.q[6] << std::endl;
             }
-            return count < 20; // timeout
+            return count < 200; // timeout
         });
         out_file.close();
         return 0;

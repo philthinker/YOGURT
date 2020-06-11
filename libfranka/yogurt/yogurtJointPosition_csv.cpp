@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
         std::string line;
         double s1, s2, s3, s4, s5, s6, s7;
         char c1, c2, c3, c4, c5, c6;
-        size_t N = 6145;
+        size_t N = 103338;
         double dataJP[N][7]; // 5164 rows and 7 columns
         int num = 0;
         while(std::getline(trajJP,line) && trajJP.good()){
