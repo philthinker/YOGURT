@@ -22,12 +22,9 @@ target_link_libraries(examples_common PUBLIC Franka::Franka Eigen3::Eigen3)
 
 set(YOGURTS
   yogurtJointMotion
-  yogurtJointVelocity
-  yogurtCartesianPose
   yogurtGetJP_rt
-  yogurtGetTauJ_rt
-  yogurtGetWrench_rt
   yogurtJointPosition_csv
+  yogurtJP_test
 )
 
 foreach(yogurt ${YOGURTS})

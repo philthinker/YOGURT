@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
   try
   {
       // Read the csv file
-      std::ifstream trajJP("dataJP2_empirical.csv",std::ios::in);
+      std::ifstream trajJP("trajJP_empirical.csv",std::ios::in);
       if(trajJP.fail()){
             std::cout << "File not found" << std::endl;
             return -1;
@@ -30,8 +30,8 @@ int main(int argc, char** argv) {
         std::string line;
         double s1, s2, s3, s4, s5, s6, s7;
         char c1, c2, c3, c4, c5, c6;
-        size_t N = 103338;
-        double dataJP[N][7]; // 5164 rows and 7 columns
+        size_t N = 24610;
+        double dataJP[N][7]; // 12340 rows and 7 columns
         int num = 0;
         while(std::getline(trajJP,line) && trajJP.good()){
             std::istringstream sin(line);
@@ -70,8 +70,13 @@ int main(int argc, char** argv) {
 
       std::array<double, 7> initial_position;
       size_t index = 0;
-      robot.control([&initial_position, &index, &dataJP, N](const franka::RobotState& robot_state,
+      double time = 0.0;
+      robot.control([&initial_position, &time, &index, &dataJP, N](const franka::RobotState& robot_state,
                                              franka::Duration period) -> franka::JointPositions {
+      time = period.toSec();
+      if(time == 0.0){
+        initial_position = robot_state.q_d;
+      }
       franka::JointPositions output = {{dataJP[index][0], 
                                         dataJP[index][1],
                                         dataJP[index][2], 
