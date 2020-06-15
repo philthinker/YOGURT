@@ -38,7 +38,7 @@ int main(int argc, char** argv){
         //robot.setJointImpedance({{3000, 3000, 3000, 2500, 2500, 2000, 2000}});
         //robot.setCartesianImpedance({{3000, 3000, 3000, 300, 300, 300}});
         // Wait for the keyboard command to run the program
-        std::cout << "Make sure to have the user stop button at hand!" << std::endl
+        std::cout << "Normally, the robot will not move!" << std::endl
                 << "Press Enter to continue. Good luck!" << std::endl;
         std::cin.ignore();
         // Read strategy (1kHz)
@@ -47,7 +47,7 @@ int main(int argc, char** argv){
         robot.read([&count,&subcount,&out_file](const franka::RobotState& robot_state) -> bool {
             subcount++;
             // Set the threshold to lower the fps
-            if(subcount >= 100){ // 10 per second
+            if(subcount >= 1000){ // 10 per second
                 subcount = 0;
                 count++;
                 out_file << robot_state.q[0] << ','
@@ -58,7 +58,7 @@ int main(int argc, char** argv){
                     << robot_state.q[5] << ','
                     << robot_state.q[6] << std::endl;
             }
-            return count < 200; // timeout
+            return count < 10; // timeout
         });
         out_file.close();
         return 0;
