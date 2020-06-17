@@ -24,7 +24,7 @@ int main(int argc, char** argv){
     }
     // Init. file
     std::ofstream out_file;
-    out_file.open("dataJP.csv",std::ios::out);
+    out_file.open("dataJP1.csv",std::ios::out);
     try
     {
         franka::Robot robot(argv[1]);
@@ -47,7 +47,7 @@ int main(int argc, char** argv){
         robot.read([&count,&subcount,&out_file](const franka::RobotState& robot_state) -> bool {
             subcount++;
             // Set the threshold to lower the fps
-            if(subcount >= 1000){ // 10 per second
+            if(subcount >= 1000){ // 1 per second
                 subcount = 0;
                 count++;
                 out_file << robot_state.q[0] << ','
