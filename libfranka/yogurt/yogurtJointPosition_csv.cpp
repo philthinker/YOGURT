@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
   try
   {
       // Read the csv file
-      std::ifstream trajJP("exeJP1.csv",std::ios::in);
+      std::ifstream trajJP("dataJPm2c_test.csv",std::ios::in);
       if(trajJP.fail()){
             std::cout << "File not found" << std::endl;
             return -1;
@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
         std::string line;
         double s1, s2, s3, s4, s5, s6, s7;
         char c1, c2, c3, c4, c5, c6;
-        size_t N = 66000; // num. of data
+        size_t N = 5000; // num. of data
         double dataJP[N][7]; // 7 columns
         int num = 0;
         while(std::getline(trajJP,line) && trajJP.good()){
