@@ -41,17 +41,17 @@ int main(int argc, char** argv) {
       if (time == 0.0) {
         initial_position = robot_state.q_d;
       }
-      double delta_angle = -M_PI / 72.0 * (1 - std::cos(M_PI / 2.0 * time));
+      double delta_angle = -M_PI / 8.0 * (1 - std::cos(M_PI / 2.5 * time));
       
       franka::JointPositions output = {{initial_position[0], 
                                         initial_position[1],
                                         initial_position[2], 
-                                        initial_position[3],
-                                        initial_position[4], 
+                                        initial_position[3] + delta_angle,
+                                        initial_position[4] + delta_angle, 
                                         initial_position[5],
                                         initial_position[6] + delta_angle}};
       //std::cout << time << std::endl;
-      if (time >= 2) {
+      if (time >= 5) {
         std::cout << std::endl << "Finished motion, shutting down yogurt" << std::endl;
         return franka::MotionFinished(output);
       }

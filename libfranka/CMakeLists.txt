@@ -201,6 +201,7 @@ file(GLOB_RECURSE SOURCES
   src/*.cpp
   #examples/*.cpp
   #### Haopeng
+  kambucha/*.cpp
   yogurt/*.cpp
   common/*.cpp
 )
@@ -209,7 +210,8 @@ file(GLOB_RECURSE HEADERS
   src/*.h
   #examples/*.h
   #### Haopeng
-  yogurt.*.h
+  kambucha/*.h
+  yogurt/*.h
   common/*.h
 )
 file(GLOB_RECURSE TEST_FILES
