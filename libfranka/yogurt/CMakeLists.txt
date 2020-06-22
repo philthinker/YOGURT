@@ -25,6 +25,7 @@ set(YOGURTS
   yogurtGetJP_rt
   yogurtJointPosition_csv
   yogurtJP_test
+  yogurtCartesianImpedanceControl
 )
 
 foreach(yogurt ${YOGURTS})
