@@ -51,7 +51,14 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "thread": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "complex": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "hash_map": "cpp",
+        "future": "cpp",
+        "cinttypes": "cpp"
     },
     "cmake.configureOnOpen": false
 }

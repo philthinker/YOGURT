@@ -21,10 +21,7 @@ add_library(examples_common STATIC
 target_link_libraries(examples_common PUBLIC Franka::Franka Eigen3::Eigen3)
 
 set(KAMBUCHAS
-  yogurtJointMotion
-  yogurtGetJP_rt
-  yogurtJointPosition_csv
-  yogurtJP_test
+  kambuchaReadOnce
 )
 
 foreach(kambucha ${KAMBUCHAS})
