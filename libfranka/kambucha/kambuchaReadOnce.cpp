@@ -42,7 +42,7 @@ int main(int argc, char** argv){
         // What do you want?
         // Joint Position
         fileOut << "JointPosition";
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i <= 6; i++)
         {
             fileOut << ',' << state.q[i];
         }
@@ -57,7 +57,7 @@ int main(int argc, char** argv){
         */  
         // End effector pose in base frame
         fileOut << "OTEE";
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i <= 15; i++)
         {
             fileOut << ',' << state.O_T_EE[i];
         }
@@ -65,7 +65,7 @@ int main(int argc, char** argv){
 
         // End effector frame pose in flange frame
         fileOut << "FTEE";
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i <= 15; i++)
         {
             fileOut << ',' << state.F_T_EE[i];
         }
@@ -73,7 +73,7 @@ int main(int argc, char** argv){
 
         // Nominal end effector frame pose in flange frame
         fileOut << "FTNE";
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i <= 15; i++)
         {
             fileOut << ',' << state.F_T_NE[i];
         }
@@ -81,7 +81,7 @@ int main(int argc, char** argv){
 
         // Nominal end effector frame pose in flange frame
         fileOut << "NETEE";
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i <= 15; i++)
         {
             fileOut << ',' << state.NE_T_EE[i];
         }
@@ -89,7 +89,7 @@ int main(int argc, char** argv){
 
         // Stiffness frame pose in end effector frame
         fileOut << "EETK";
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i <= 15; i++)
         {
             fileOut << ',' << state.EE_T_K[i];
         }
@@ -98,14 +98,14 @@ int main(int argc, char** argv){
         // Force
         // Estimated wrench on stiffness frame w.r.t. base frame
         fileOut << "OFK";
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i <= 5; i++)
         {
             fileOut << ',' << state.O_F_ext_hat_K[i];
         }
         fileOut << std::endl;
         // Estimated wrench on stiffness frame w.r.t. stiffness frame
         fileOut << "KFK";
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i <= 5; i++)
         {
             fileOut << ',' << state.K_F_ext_hat_K[i];
         }
@@ -113,11 +113,11 @@ int main(int argc, char** argv){
 
         // Torque
         fileOut << "JointTorque";
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i <= 6; i++)
         {
             fileOut << ',' << state.tau_J[i];
         }
-        fileOut << std::endl;
+        //fileOut << std::endl;
 
         fileOut.close();
     }

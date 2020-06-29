@@ -164,7 +164,8 @@ option(BUILD_EXAMPLES "Build example code" ON)
 if(BUILD_EXAMPLES)
   #add_subdirectory(examples)
   #### Haopeng
-  add_subdirectory(yogurt)
+  #add_subdirectory(yogurt)
+  add_subdirectory(kambucha)
 endif()
 
 option(BUILD_DOCUMENTATION "Build documentation" OFF)
@@ -202,7 +203,7 @@ file(GLOB_RECURSE SOURCES
   #examples/*.cpp
   #### Haopeng
   kambucha/*.cpp
-  yogurt/*.cpp
+  #yogurt/*.cpp
   common/*.cpp
 )
 file(GLOB_RECURSE HEADERS
@@ -211,7 +212,7 @@ file(GLOB_RECURSE HEADERS
   #examples/*.h
   #### Haopeng
   kambucha/*.h
-  yogurt/*.h
+  #yogurt/*.h
   common/*.h
 )
 file(GLOB_RECURSE TEST_FILES

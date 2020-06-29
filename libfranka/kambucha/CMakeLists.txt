@@ -34,7 +34,7 @@ endforeach()
 #target_link_libraries(motion_with_control Poco::Foundation)
 
 include(GNUInstallDirs)
-install(TARGETS ${YOGURTS}
+install(TARGETS ${KAMBUCHA}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
