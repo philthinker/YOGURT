@@ -75,6 +75,7 @@ int main(int argc, char** argv){
         // Counter
         size_t counter = 1;
         size_t timer = 0;
+        std::cout << "Start reading robot state" << std::endl;
         robot.read([&](const franka::RobotState& robot_state) -> bool{
             // Read what you want
             if(counter >= floor(1000/freqRead)){
