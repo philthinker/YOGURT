@@ -5,7 +5,7 @@
 //  Haopeng Hu
 //  2020.06.28
 //
-//  What do you want?
+//  kambuchaReadOnce <fci-ip> tailName
 
 
 #include <iostream>
