@@ -36,11 +36,11 @@ int main(int argc, char** argv){
     }
     std::vector<std::vector<double>> cartePoseData; // Store the Cartesian pose data
     std::string line;                               // Store one line of data for file reading
-    std::vector<double> cartePoseDataTmp;           // Store one Cartesian pose data
     while (std::getline(fileIn,line) && fileIn.good())
     {
         std::istringstream dataIn(line);
         std::string dataTmp;
+        std::vector<double> cartePoseDataTmp;       // Store one Cartesian pose data
         while (std::getline(dataIn,dataTmp,','))
         {
             cartePoseDataTmp.push_back(std::stod(dataTmp));
@@ -61,6 +61,8 @@ int main(int argc, char** argv){
             {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}}, {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}},
             {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}}, {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}},
             {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}}, {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}});
+        robot.setCartesianImpedance({{2000, 2000, 2000, 200, 200, 200}});
+        robot.setJointImpedance({{3000, 3000, 3000, 2500, 2500, 2000, 2000}});
         // Run the Cartesin pose one by one
         for (unsigned int i = 0; i < cartePoseData.size(); i++)
         {
@@ -69,14 +71,15 @@ int main(int argc, char** argv){
             {
                 // Motion generator
                 double timer = 0.0;
-                robot.control([&FRAME,&cartePoseData,&timer,i](const franka::RobotState state, franka::Duration period) 
+                std::array<double,16> cartePose_c;
+                robot.control([&FRAME,&cartePoseData,&timer,&cartePose_c,i](const franka::RobotState state, franka::Duration period) 
                     -> franka::CartesianPose{
                     // Position and Quaternion interpolation
                     timer = period.toSec();
                     if(timer == 0.0){
                         // The first pose must be the initial pose
+                        cartePose_c = state.O_T_EE_d;
                     }
-                    franka::CartesianPose cartePose_c = state.O_T_EE;
                     return cartePose_c;
                 });
             }

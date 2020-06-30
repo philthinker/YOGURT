@@ -105,9 +105,9 @@ int main(int argc, char** argv){
                 for (int j = 0; j < 7; j++)
                 {
                     q_goal[j] = jointPoseData[k][j];
-                    std::cout << q_goal[j] << ',';
+                    //std::cout << q_goal[j] << ',';
                 }
-                std::cout << std::endl;
+                //std::cout << std::endl;
                 MotionGenerator jointPoseGen(speed,q_goal);
                 robot.control(jointPoseGen);
             }

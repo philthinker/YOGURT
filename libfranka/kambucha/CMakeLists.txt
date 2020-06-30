@@ -28,6 +28,7 @@ set(KAMBUCHAS
   kambuchaJointPose_Oneshot
   kambuchaCarteOEPose
   #kambuchaCarteOEPoseTorque
+  kambuchaZeroGravity
 )
 
 foreach(kambucha ${KAMBUCHAS})
