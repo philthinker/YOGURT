@@ -5,7 +5,7 @@
 //  Haopeng Hu
 //  2020.06.30
 //  
-//  kambuchaJointPose <fci-ip> fileInName speed fileOutName
+//  kambuchaJointPose <fci-ip> fileInName speed fileOutName fps
 
 #include <iostream>
 #include <string>
@@ -78,6 +78,17 @@ int main(int argc, char** argv){
         jointPoseData.push_back(jointPoseDataTmp);
     }
     std::cout << jointPoseData.size() << " joint poses are read" << std::endl;
+    // fps
+    double fps = 1000;
+    if(argc >= 6){
+        std::string fpsIn(argv[5]); // [1,1000]
+        fps = std::stod(fpsIn);
+        if(fps < 1){
+            fps = 1;
+        }else if(fps > 1000){
+            fps = 1000;
+        }
+    }
     try
     {
         // Init. the robot
@@ -109,13 +120,50 @@ int main(int argc, char** argv){
                 }
                 //std::cout << std::endl;
                 double timer = 0.0;
-                std::array<double,7> jointPose_c;
+                std::array<double,7> init_jp;
+                unsigned int counter = 1;
                 robot.control([&](const franka::RobotState& state, franka::Duration period) -> franka::JointPositions{
                     // Joint pose motion plan with default impedance controller
                     timer += period.toSec();
                     if(timer == 0.0){
-                        jointPose_c = state.q_d;    // This first joint pose command must be the current one
+                        init_jp = state.q_d;        // The 1st joint pose command must be the current one
                     }
+                    // S-spline interpolation
+                    franka::JointPositions jointPose_c = {{
+                            init_jp[0] + (q_goal[0] - init_jp[0])/2*(1-std::cos(M_PI_4/2*timer*speed)),
+                            init_jp[1] + (q_goal[1] - init_jp[1])/2*(1-std::cos(M_PI_4/2*timer*speed)),
+                            init_jp[2] + (q_goal[2] - init_jp[2])/2*(1-std::cos(M_PI_4/2*timer*speed)),
+                            init_jp[3] + (q_goal[3] - init_jp[3])/2*(1-std::cos(M_PI_4/2*timer*speed)),
+                            init_jp[4] + (q_goal[4] - init_jp[4])/2*(1-std::cos(M_PI_4/2*timer*speed)),
+                            init_jp[5] + (q_goal[5] - init_jp[5])/2*(1-std::cos(M_PI_4/2*timer*speed)),
+                            init_jp[6] + (q_goal[6] - init_jp[6])/2*(1-std::cos(M_PI_4/2*timer*speed))}};
+                    if(timer >= 8.0/speed){
+                        return franka::MotionFinished(jointPose_c);
+                    }
+                    if(counter >= std::ceil(1000/fps)){
+                        // Read the required data
+                        for (unsigned int i = 0; i < 7; i++)
+                        {
+                            fileTauJ << state.tau_J[i] << ',';
+                            fileJP << state.q[i] << ',';
+                        }
+                        fileTauJ << std::endl;
+                        fileJP << std::endl;
+                        for (unsigned int i = 0; i < 16; i++)
+                        {
+                            fileOTEE << state.O_T_EE[i] << ',';
+                        }
+                        fileOTEE << std::endl;
+                        for (unsigned int i = 0; i < 6; i++)
+                        {
+                            fileKFK << state.K_F_ext_hat_K[i] << ',';
+                            fileOFK << state.O_F_ext_hat_K[i] << ',';
+                        }
+                        fileKFK << std::endl;
+                        fileOFK << std::endl;
+                        counter = 1;
+                    }
+                    counter++;
                     return jointPose_c;
                 });
             }

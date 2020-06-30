@@ -60,5 +60,6 @@
         "future": "cpp",
         "cinttypes": "cpp"
     },
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "C_Cpp.errorSquiggles": "Enabled"
 }
