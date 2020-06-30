@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Franka REQUIRED)
 find_package(Eigen3 REQUIRED)
-find_package(Poco REQUIRED COMPONENTS Foundation)
+#find_package(Poco REQUIRED COMPONENTS Foundation)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
@@ -23,6 +23,11 @@ target_link_libraries(examples_common PUBLIC Franka::Franka Eigen3::Eigen3)
 set(KAMBUCHAS
   kambuchaReadOnce
   kambuchaReadRT
+  #kambuchaJointPoseRT
+  kambuchaJointPose
+  kambuchaJointPose_Oneshot
+  kambuchaCarteOEPose
+  #kambuchaCarteOEPoseTorque
 )
 
 foreach(kambucha ${KAMBUCHAS})

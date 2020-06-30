@@ -23,7 +23,7 @@
 
 int main(int argc, char** argv){
     if(argc < 3){
-        std::cerr << "Usage: " << argv[0] << "<fci-ip> " << "fileInName " << "speed " << "fileOutName " << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <fci-ip> " << "fileInName " << "speed " << "fileOutName " << std::endl;
         return -1;
     }
     // Speed
@@ -39,7 +39,7 @@ int main(int argc, char** argv){
     // Output file name
     std::string fileOutName("RobotState");
     if(argc >= 5){
-        std::string fileOutName(argv[4]);
+        fileOutName.assign(argv[4]);
     }
         // OTEE
         std::string fileOTEEName(fileOutName);  // Deep copy
@@ -47,6 +47,9 @@ int main(int argc, char** argv){
         // tauJ
         std::string fileTauJName(fileOutName);
         std::ofstream fileTauJ(fileTauJName.append("_tauJ.csv"),std::ios::out);
+        // q
+        std::string fileJPName(fileOutName);
+        std::ofstream fileJP(fileJPName.append("_JP.csv"),std::ios::out);
         // OFK
         std::string fileOFKName(fileOutName);
         std::ofstream fileOFK(fileOFKName.append("_OFK.csv"),std::ios::out);
@@ -63,11 +66,11 @@ int main(int argc, char** argv){
     }
     std::vector<std::vector<double>> jointPoseData; // Store the Cartesian pose data
     std::string line;                               // Store one line of data for file reading
-    std::vector<double> jointPoseDataTmp;           // Store one Cartesian pose data
     while (std::getline(fileIn,line) && fileIn.good())
     {
         std::istringstream dataIn(line);
         std::string dataTmp;
+        std::vector<double> jointPoseDataTmp;       // Store one Cartesian pose data
         while (std::getline(dataIn,dataTmp,','))
         {
             jointPoseDataTmp.push_back(std::stod(dataTmp));
@@ -90,7 +93,7 @@ int main(int argc, char** argv){
             {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}}, {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}},
             {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}}, {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}});
         // Run the Cartesin pose one by one
-        for (int i = 0; i < jointPoseData.size(); i++)
+        for (unsigned int k = 0; k < jointPoseData.size(); k++)
         {
             // Joint pose [i]
             try
@@ -99,10 +102,12 @@ int main(int argc, char** argv){
                 // Here we use the MotionGenerator in examples_common.cpp
                 // For RT joint motion generator, please refer to kambuchaJointPoseRT.cpp
                 std::array<double,7> q_goal;
-                for (int j = 0; i < 7; i++)
+                for (int j = 0; j < 7; j++)
                 {
-                    q_goal[j] = jointPoseData[i][j];
+                    q_goal[j] = jointPoseData[k][j];
+                    std::cout << q_goal[j] << ',';
                 }
+                std::cout << std::endl;
                 MotionGenerator jointPoseGen(speed,q_goal);
                 robot.control(jointPoseGen);
             }
@@ -112,7 +117,7 @@ int main(int argc, char** argv){
                 std::cout << "Running error recovery..." << std::endl;
                 robot.automaticErrorRecovery();
             }
-            std::cout << "Joint pose: " << i << "finished" << std::endl;
+            std::cout << "Joint pose: " << k << " finished" << std::endl;
             // Read the robot state data by readOnce
             franka::RobotState robot_state = robot.readOnce();
             if(argc >= 5){
@@ -128,6 +133,12 @@ int main(int argc, char** argv){
                     fileTauJ << robot_state.tau_J[i] << ',';
                 }
                 fileTauJ << std::endl;
+                // q
+                for (int i = 0; i < 7; i++)
+                {
+                    fileJP << robot_state.q[i] << ',';
+                }
+                fileJP << std::endl;
                 // OFK
                 for (int i = 0; i < 6; i++)
                 {
@@ -146,12 +157,14 @@ int main(int argc, char** argv){
         // Never forget to close those files
         fileOTEE.close();
         fileTauJ.close();
+        fileJP.close();
         fileKFK.close();
         fileOFK.close();
         if(argc < 5){
             // We do not need the robot state data. Delete them!
             std::remove(fileOTEEName.data());
             std::remove(fileTauJName.data());
+            std::remove(fileJPName.data());
             std::remove(fileOFKName.data());
             std::remove(fileOFKName.data());
         }
@@ -162,6 +175,7 @@ int main(int argc, char** argv){
         // Never forget to close those files
         fileOTEE.close();
         fileTauJ.close();
+        fileJP.close();
         fileKFK.close();
         fileOFK.close();
         return -1;

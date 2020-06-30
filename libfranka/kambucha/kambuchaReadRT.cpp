@@ -20,7 +20,7 @@
 int main(int argc, char** argv){
     if(argc < 2){
         // No fci-ip given
-        std::cerr << "Usage: " << argv[0] << " <fci-ip>" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <fci-ip> " << "tailName " << "freqRead " << "timeout " << std::endl;
         return -1;
     }
     std::cout << "Read the RobotState during demonstration" << std::endl << "Press Enter to continue ..." << std::endl;
@@ -76,6 +76,9 @@ int main(int argc, char** argv){
         size_t counter = 1;
         size_t timer = 0;
         std::cout << "Start reading robot state" << std::endl;
+        std::cout << "fps: " << freqRead << std::endl
+            << "timeout: " << timeout << std::endl
+            << "data file: RobotState_DATA_" << tailName << std::endl;
         robot.read([&](const franka::RobotState& robot_state) -> bool{
             // Read what you want
             if(counter >= floor(1000/freqRead)){

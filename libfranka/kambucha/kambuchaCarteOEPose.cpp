@@ -62,7 +62,7 @@ int main(int argc, char** argv){
             {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}}, {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}},
             {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}}, {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}});
         // Run the Cartesin pose one by one
-        for (int i = 0; i < cartePoseData.size(); i++)
+        for (unsigned int i = 0; i < cartePoseData.size(); i++)
         {
             // Cartesian pose [i]
             try
@@ -76,6 +76,8 @@ int main(int argc, char** argv){
                     if(timer == 0.0){
                         // The first pose must be the initial pose
                     }
+                    franka::CartesianPose cartePose_c = state.O_T_EE;
+                    return cartePose_c;
                 });
             }
             catch(const franka::ControlException& e)
