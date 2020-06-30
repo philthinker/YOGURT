@@ -83,8 +83,6 @@ int main(int argc, char** argv){
     std::ofstream fileOut_KFK(fileOutName.append("_KFK.csv"), std::ios::out);
     fileOutName.assign(argv[4]);
     std::ofstream fileOut_tauJ(fileOutName.append("_tauJ.csv"), std::ios::out);
-    fileOutName.assign(argv[4]);
-    std::ofstream fileOut_cori(fileOutName.append("_cori.csv"), std::ios::out);
     // fps
     std::string fpsIn(argv[5]);
     double fps = std::stod(fpsIn);  // [1,1000]
@@ -145,7 +143,6 @@ int main(int argc, char** argv){
         fileOut_OFK.close();
         fileOut_KFK.close();
         fileOut_tauJ.close();
-        fileOut_cori.close();
         return -1;
     }
     // Never forget to close those files
@@ -154,6 +151,5 @@ int main(int argc, char** argv){
     fileOut_OFK.close();
     fileOut_KFK.close();
     fileOut_tauJ.close();
-    fileOut_cori.close();
     return 0;
 }
