@@ -1,11 +1,11 @@
-//kambuchaCarteOEPose
+//kambuchaCarteOEPoseTorque
 //  Move to the given Cartesian pose w.r.t. base frame or end effector frame
 //  You can specify a file name to assign the goal pose
 //  
 //  Haopeng Hu
-//  2020.06.29
+//  2020.06.30
 //
-//  kambuchaCarteOEPose <fci-ip> O/E fileName
+//  kambuchaCarteOEPoseTorque <fci-ip> O/E fileName
 
 #include <iostream>
 #include <string>
@@ -61,6 +61,12 @@ int main(int argc, char** argv){
             {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}}, {{20.0, 20.0, 18.0, 18.0, 16.0, 14.0, 12.0}},
             {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}}, {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}},
             {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}}, {{20.0, 20.0, 20.0, 25.0, 25.0, 25.0}});
+        // Torque controller
+        auto controllerTorque = [&](const franka::RobotState& state, franka::Duration period) -> franka::Torques{
+            // Impedance control law
+            franka::Torques tau_c({{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}});
+            return tau_c;
+        };
         // Run the Cartesin pose one by one
         for (int i = 0; i < cartePoseData.size(); i++)
         {
@@ -69,7 +75,7 @@ int main(int argc, char** argv){
             {
                 // Motion generator
                 double timer = 0.0;
-                robot.control([&FRAME,&cartePoseData,&timer,i](const franka::RobotState state, franka::Duration period) 
+                robot.control(controllerTorque, [&FRAME,&cartePoseData,&timer,i](const franka::RobotState state, franka::Duration period) 
                     -> franka::CartesianPose{
                     // Position and Quaternion interpolation
                     timer = period.toSec();
