@@ -5,7 +5,7 @@
 //  Haopeng Hu
 //  2020.06.29
 //
-//  kambuchaCarteOEPose <fci-ip> O/E fileName
+//  kambuchaCarteOPose <fci-ip> O/E fileName
 
 #include <iostream>
 #include <string>
@@ -71,16 +71,29 @@ int main(int argc, char** argv){
             {
                 // Motion generator
                 double timer = 0.0;
-                std::array<double,16> cartePose_c;
-                robot.control([&FRAME,&cartePoseData,&timer,&cartePose_c,i](const franka::RobotState state, franka::Duration period) 
+                std::array<double,16> init_carte_pose;
+                std::array<double,16> goal_carte_pose;
+                for (unsigned int j = 0; j < 16; j++)
+                {
+                    goal_carte_pose[j] = cartePoseData[i][j];
+                }
+                robot.control([&](const franka::RobotState state, franka::Duration period) 
                     -> franka::CartesianPose{
                     // Position and Quaternion interpolation
-                    timer = period.toSec();
+                    timer += period.toSec();
                     if(timer == 0.0){
                         // The first pose must be the initial pose
-                        cartePose_c = state.O_T_EE_d;
+                        init_carte_pose = state.O_T_EE_d;
                     }
-                    return cartePose_c;
+                    std::array<double,16> carte_pose_c = init_carte_pose;
+                    // Position intepolation
+                    carte_pose_c[12] = init_carte_pose[12] + (goal_carte_pose[12] - init_carte_pose[12])/2*(1-cos(M_PI_4*timer));
+                    carte_pose_c[13] = init_carte_pose[13] + (goal_carte_pose[13] - init_carte_pose[13])/2*(1-cos(M_PI_4*timer));
+                    carte_pose_c[14] = init_carte_pose[14] + (goal_carte_pose[14] - init_carte_pose[14])/2*(1-cos(M_PI_4*timer));
+                    if(timer >= 4){
+                        return franka::MotionFinished(carte_pose_c);
+                    }
+                    return carte_pose_c;
                 });
             }
             catch(const franka::ControlException& e)

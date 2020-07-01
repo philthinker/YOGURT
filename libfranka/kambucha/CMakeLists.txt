@@ -26,8 +26,8 @@ set(KAMBUCHAS
   kambuchaJointPoseRT
   kambuchaJointPose
   kambuchaJointPose_Oneshot
-  kambuchaCarteOEPose
-  #kambuchaCarteOEPoseTorque
+  kambuchaCarteOPose
+  #kambuchaCarteOPoseTorque
   kambuchaZeroGravity
 )
 
