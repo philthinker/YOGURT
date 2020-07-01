@@ -61,7 +61,7 @@ int main(int argc, char** argv){
     fileInName.append(".csv");            // fileInName.csv
     std::ifstream fileIn(fileInName,std::ios::in);
     if(fileIn.fail()){
-        std::cerr << "File: " << argv[3] << ".csv not found" << std::endl;
+        std::cerr << "File: " << argv[2] << ".csv not found" << std::endl;
         return -1;
     }
     std::vector<std::vector<double>> jointPoseData; // Store the Cartesian pose data
@@ -166,7 +166,7 @@ int main(int argc, char** argv){
             std::remove(fileTauJName.data());
             std::remove(fileJPName.data());
             std::remove(fileOFKName.data());
-            std::remove(fileOFKName.data());
+            std::remove(fileKFKName.data());
         }
     }
     catch(const franka::Exception& e)
