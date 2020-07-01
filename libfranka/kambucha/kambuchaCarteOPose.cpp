@@ -5,7 +5,7 @@
 //  Haopeng Hu
 //  2020.06.29
 //
-//  kambuchaCarteOPose <fci-ip> O/E fileName
+//  kambuchaCarteOPose <fci-ip> fileName
 
 #include <iostream>
 #include <string>
@@ -21,17 +21,16 @@
 #include <Eigen/Dense>
 
 int main(int argc, char** argv){
-    if(argc < 4){
-        std::cerr << "Usage: " << argv[0] << "<fci-ip> " << "O/E " << "fileName" << std::endl;
+    if(argc < 3){
+        std::cerr << "Usage: " << argv[0] << " <fci-ip> " <<  " fileName " << std::endl;
         return -1;
     }
-    // Read frame and goal pose
-    const std::string FRAME(argv[2]);   // frame
-    std::string fileName(argv[3]);
+    // Read goal poses
+    std::string fileName(argv[2]);
     fileName.append(".csv");            // fileName.csv
     std::ifstream fileIn(fileName,std::ios::in);
     if(fileIn.fail()){
-        std::cerr << "File: " << argv[3] << ".csv not found" << std::endl;
+        std::cerr << "File: " << argv[2] << ".csv not found" << std::endl;
         return -1;
     }
     std::vector<std::vector<double>> cartePoseData; // Store the Cartesian pose data
@@ -47,7 +46,7 @@ int main(int argc, char** argv){
         }
         cartePoseData.push_back(cartePoseDataTmp);
     }
-    std::cout << cartePoseData.size() << " Cartesian poses in " << FRAME << " frame are read" << std::endl;
+    std::cout << cartePoseData.size() << " Cartesian poses are read" << std::endl;
     try
     {
         // Init. the robot
