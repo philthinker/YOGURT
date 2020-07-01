@@ -23,7 +23,7 @@
 
 int main(int argc, char** argv){
     if(argc < 3){
-        std::cerr << "Usage: " << argv[0] << " <fci-ip> " << "fileInName " << "speed " << "fileOutName " << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <fci-ip> " << "fileInName " << "speed " << "fileOutName " << " fps " << std::endl;
         return -1;
     }
     // Speed
@@ -116,9 +116,9 @@ int main(int argc, char** argv){
                 for (int j = 0; j < 7; j++)
                 {
                     q_goal[j] = jointPoseData[k][j];
-                    //std::cout << q_goal[j] << ',';
+                    std::cout << q_goal[j] << ',';
                 }
-                //std::cout << std::endl;
+                std::cout << std::endl;
                 double timer = 0.0;
                 std::array<double,7> init_jp;
                 unsigned int counter = 1;
@@ -130,14 +130,14 @@ int main(int argc, char** argv){
                     }
                     // S-spline interpolation
                     franka::JointPositions jointPose_c = {{
-                            init_jp[0] + (q_goal[0] - init_jp[0])/2*(1-std::cos(M_PI_4/2*timer*speed)),
-                            init_jp[1] + (q_goal[1] - init_jp[1])/2*(1-std::cos(M_PI_4/2*timer*speed)),
-                            init_jp[2] + (q_goal[2] - init_jp[2])/2*(1-std::cos(M_PI_4/2*timer*speed)),
-                            init_jp[3] + (q_goal[3] - init_jp[3])/2*(1-std::cos(M_PI_4/2*timer*speed)),
-                            init_jp[4] + (q_goal[4] - init_jp[4])/2*(1-std::cos(M_PI_4/2*timer*speed)),
-                            init_jp[5] + (q_goal[5] - init_jp[5])/2*(1-std::cos(M_PI_4/2*timer*speed)),
-                            init_jp[6] + (q_goal[6] - init_jp[6])/2*(1-std::cos(M_PI_4/2*timer*speed))}};
-                    if(timer >= 8.0/speed){
+                            init_jp[0] + (q_goal[0] - init_jp[0])/2*(1-std::cos(M_PI_4*timer*speed)),
+                            init_jp[1] + (q_goal[1] - init_jp[1])/2*(1-std::cos(M_PI_4*timer*speed)),
+                            init_jp[2] + (q_goal[2] - init_jp[2])/2*(1-std::cos(M_PI_4*timer*speed)),
+                            init_jp[3] + (q_goal[3] - init_jp[3])/2*(1-std::cos(M_PI_4*timer*speed)),
+                            init_jp[4] + (q_goal[4] - init_jp[4])/2*(1-std::cos(M_PI_4*timer*speed)),
+                            init_jp[5] + (q_goal[5] - init_jp[5])/2*(1-std::cos(M_PI_4*timer*speed)),
+                            init_jp[6] + (q_goal[6] - init_jp[6])/2*(1-std::cos(M_PI_4*timer*speed))}};
+                    if(timer >= 4.0/speed){
                         return franka::MotionFinished(jointPose_c);
                     }
                     if(counter >= std::ceil(1000/fps)){
