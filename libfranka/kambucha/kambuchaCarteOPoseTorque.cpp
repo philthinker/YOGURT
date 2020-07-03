@@ -18,7 +18,7 @@
 #include <franka/exception.h>
 #include <franka/model.h>
 
-#include <Eigen/Dense>
+//#include <Eigen/Dense>
 
 int main(int argc, char** argv){
     if(argc < 4){
