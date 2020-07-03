@@ -1,2 +1,0 @@
-C:\msys64\mingw64\bin\ar.exe qc libLACTIC.a  CMakeFiles/LACTIC.dir/readCSV.cpp.obj
-C:\msys64\mingw64\bin\ranlib.exe libLACTIC.a
