@@ -7,8 +7,5 @@ Haopeng Hu
 
 All rights reserved
 
-## Yogurts
-
-- RawMilkYogurt - Init. 2020.05.20 - Modif. 2020.05.20
 
 *Have you found that the Panda is as white as a bottle of yogurt?*
